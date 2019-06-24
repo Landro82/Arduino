@@ -1,0 +1,21 @@
+int pinBouton = 2;
+int ledPin1 = 4;
+int ledPin2 = 6;
+void setup()
+{
+    pinMode(pinBouton,INPUT); //On indique à l’Arduino le mode du pin (entrée)
+    pinMode(ledPin1, OUTPUT);
+    pinMode(ledPin2, OUTPUT);
+}
+void loop()
+{
+    boolean etatBouton=digitalRead(pinBouton);// et on l’affecte à la variable "etatbouton"
+    if(etatBouton){
+      digitalWrite(ledPin1, LOW);
+      digitalWrite(ledPin2, HIGH);
+    }else{
+      digitalWrite(ledPin1, HIGH);
+      digitalWrite(ledPin2, LOW);
+    }
+    delay(1000);
+}
