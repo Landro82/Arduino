@@ -1,0 +1,63 @@
+//int LED_PIN[5]= {2,3,4,5,6}; // declaration du tableau
+//int countPin = 5; // compteur de Pin
+//initialisation des Pins
+int ledPin1 = 2;
+int ledPin2 = 3;
+int ledPin3 = 4;
+int ledPin4 = 5;
+int ledPin5 = 6;
+int nbrAleatoire;
+
+void setup()
+{
+// Initialisation du Mode
+ pinMode(ledPin1, OUTPUT);
+ pinMode(ledPin2, OUTPUT);
+ pinMode(ledPin3, OUTPUT);
+ pinMode(ledPin4, OUTPUT);
+ pinMode(ledPin5, OUTPUT);
+ randomSeed(analogRead(0));// initialisation de la sequence aleatoire
+  
+}
+
+void loop()
+{
+   nbrAleatoire = random(5);
+  if(nbrAleatoire == 1){
+  	digitalWrite(ledPin3, HIGH);
+    delay(1000);
+  }else if(nbrAleatoire == 2){
+    digitalWrite(ledPin1, HIGH);
+    digitalWrite(ledPin4, HIGH);
+    delay(1000);
+  }else if(nbrAleatoire == 3){
+    digitalWrite(ledPin2, HIGH);
+    digitalWrite(ledPin3, HIGH);
+    digitalWrite(ledPin5, HIGH);
+    delay(1000);
+  }else if(nbrAleatoire == 4){
+    digitalWrite(ledPin1, HIGH);
+    digitalWrite(ledPin2, HIGH);
+    digitalWrite(ledPin4, HIGH);
+    digitalWrite(ledPin5, HIGH);
+    delay(1000);
+
+  }else if(nbrAleatoire == 5){
+    digitalWrite(ledPin1, HIGH);
+    digitalWrite(ledPin2, HIGH);
+    digitalWrite(ledPin3, HIGH);
+    digitalWrite(ledPin4, HIGH);
+    digitalWrite(ledPin5, HIGH);
+    delay(1000);
+
+  }else if(nbrAleatoire == 0){
+    digitalWrite(ledPin1, LOW);
+    digitalWrite(ledPin2, LOW);
+    digitalWrite(ledPin3, LOW);
+    digitalWrite(ledPin4, LOW);
+    digitalWrite(ledPin5, LOW);
+    delay(1000);
+  }
+    
+  
+}
