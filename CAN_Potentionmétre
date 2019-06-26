@@ -1,0 +1,91 @@
+int Pot_Pin = 0;//Variable pr defini le CAN ou le potentiométre est connecté
+int PotVal = 0;//Variable pour recupére la tension aux bornes du potentiométre traduite par le CAN on l'initialise á 0
+void setup() {
+Serial.begin(9600); // Initialisation de la communication avec la console
+}
+
+void loop() {
+PotVal = analogRead(A0);// lit la tension, la convertit en valeur numérique et la stocke dans PotVal
+Serial.print("Value lue : ");
+Serial.println(PotVal);
+}
+/*****************Clignotant á LED *************************************/
+int Pot_Pin = 0;//Variable pr defini le CAN ou le potentiométre est connecté
+int PotVal = 0;//Variable pour recupére la tension aux bornes du potentiométre traduite par le CAN on l'initialise á 0
+int LED_PIN = 8; // initialisation du pin
+void setup() {
+Serial.begin(9600); // Initialisation de la communication avec la console
+pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+PotVal = analogRead(A0);// lit la tension, la convertit en valeur numérique et la stocke dans PotVal
+Serial.print("Value lue : ");
+Serial.println(PotVal);
+if(PotVal >0 && PotVal <204){
+  digitalWrite(LED_PIN, HIGH);
+  delay(100);
+  digitalWrite(LED_PIN, LOW);
+  delay(100);
+  }
+  else if(PotVal >=204 && PotVal <408){
+  digitalWrite(LED_PIN, HIGH);
+  delay(125);
+  digitalWrite(LED_PIN, LOW);
+  delay(125);
+  } else if(PotVal >=408 && PotVal <613){
+    digitalWrite(LED_PIN, HIGH);
+    delay(167);
+    digitalWrite(LED_PIN, LOW);
+    delay(167);
+  } else if(PotVal >=613 && PotVal <818){
+    digitalWrite(LED_PIN, HIGH);
+    delay(250);
+    digitalWrite(LED_PIN, LOW);
+    delay(250);
+  }
+  else if(PotVal >=818 && PotVal <=1023){
+    digitalWrite(LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(LED_PIN, LOW);
+    delay(500);
+  }
+
+  }
+  /********************* Clignant Plus *******************************************/
+  int pinPot=0; //variable pour le pin où est connecté le potentiomètre
+int valPot=0; //variable pour récupérer la valeur lue. On l'initialise à 0.
+int pinLED=8;
+void setup() {
+  Serial.begin(9600);
+  pinMode(pinLED,OUTPUT);
+  //digitalWrite(pinLED,HIGH);
+}
+
+void loop() {
+  valPot=analogRead(A0); //lit la valeur, la transforme et la stocke dans la variable
+  Serial.print("Valuer lue: ");
+  Serial.println(valPot);
+  int attente=500;
+  if (valPot>0 && valPot<=204){
+    attente=100;
+  }
+  if (valPot>=205 && valPot<=408){
+    attente=125;
+  }
+  if (valPot>=409 && valPot<=613){
+    attente=167;
+  }
+  if (valPot>=614 && valPot<=818){
+    attente=250;
+  }
+  if (valPot>=818 && valPot<=1023){
+    attente=500;
+  }
+  digitalWrite(pinLED,HIGH);
+  delay (attente);
+  digitalWrite(pinLED,LOW);
+  delay(attente);
+}
+
+
