@@ -1,0 +1,44 @@
+/*Envoyez et testez ! Si tout se passe bien, le servo prend une 
+position extrême (0°) puis se déplace par tranche de 20°,
+puis lorsqu'il atteint les 180°, il revient à la position
+de départ et recommence.*/
+
+// période entre chaque début d'impulsion en microsecondes
+int periode = 20000;
+// variable pour le pin connecté à la commande du servo
+int pinServo = 6;
+
+void setup()
+{
+  // on prépare le pin en mode OUTPUT
+  pinMode(pinServo, OUTPUT);
+  // on l'initialise à l'état bas
+  digitalWrite(pinServo, LOW);
+}
+
+void loop()
+{
+  //on fait varier l'angle de 0 à 180° par tranche de 20°
+  for(int angle = 0; angle <=180; angle +=20){
+    // on appelle la fonction setAngle définie plus bas
+    setAngle(angle);
+  }
+ 
+}
+void setAngle(int a){
+  // on transforme l'angle en microsecondes et on stocke dans la variable duree
+  //int duree=map(a,0,179,1000,2000);
+   
+  int duree=map(a,0,179,500,2500);
+
+  //on met le pin á l'etat bas
+  digitalWrite(pinServo, LOW);
+  // la boucle qui suit est nécessaire 
+  // pour laisser le temps au servo d'aller à sa position
+  for (int t=0;t<300;t++){ 
+    digitalWrite(pinServo,HIGH);// on envoie l'impulsion
+    delayMicroseconds(duree); // pendant la bonne durée
+    digitalWrite(pinServo,LOW); // on stoppe l'impulsion
+    delayMicroseconds(periode-duree); // on attend le temps restant pour atteindre la période
+  }
+}
