@@ -1,0 +1,41 @@
+#include <Servo.h> //on importe la bibliothèque Servo
+int pinServo=8; // variable pour stocker le pin pour la commande
+Servo leServo; // on définit un objet Servo nommé leServo
+void setup() {
+  leServo.attach(pinServo); // on relie l'objet au pin de commande
+}
+
+void loop() {
+  leServo.write(0); // on dit à l'objet de mettre le servo à 0°
+  delay(1000); // ce délai est nécessaire pour que le servo atteigne sa position
+  leServo.write(179); // position à 179, 180 est à éviter car cela forcerait le servo à dépasser ses limites
+  delay(1000); // attente à nouveau
+}
+/********************************************Servo + LED*************************************************************************/
+#include <Servo.h> //on importe la bibliothèque Servo
+int pinServo=8; // variable pour stocker le pin pour la commande
+Servo leServo; // on définit un objet Servo nommé leServo
+int ledPin = 3;// on attache la LED au pin 3
+void setup() {
+  leServo.attach(pinServo); // on relie l'objet au pin de commande
+  pinMode(ledPin, OUTPUT); // Pin en mode OUTPUT
+}
+
+void loop() {
+  leServo.write(0); // on dit à l'objet de mettre le servo à 0°
+  //delay(1000); // ce délai est nécessaire pour que le servo atteigne sa position
+  diode13(); // appel de la fonction diode13()
+  leServo.write(179); // position à 179, 180 est à éviter car cela forcerait le servo à dépasser ses limites
+  //delay(1000); // attente à nouveau
+  diode13();//appel de la fonction
+}
+void diode13(){
+  //On fait clignoter 30 fois la LED
+  for(int t = 0; t < 30; t++){
+    digitalWrite(ledPin, HIGH);
+    delay(100);
+    digitalWrite(ledPin, LOW);
+    delay(100);
+  }
+}
+/*******************************************************************************************************/
