@@ -1,0 +1,42 @@
+#include <Servo.h> //on importe la bibliothèque Servo
+int pinServo=8; // variable pour stocker le pin pour la commande
+int potPin = A0;// On défini le Pin lié á la lecture du potentiométre
+Servo leServo; // on définit un objet Servo nommé leServo
+int ledPin3 = 3;
+int ledPin4 = 4;
+void setup() {
+  Serial.begin(9600);
+  leServo.attach(pinServo); // on relie l'objet au pin de commande
+  pinMode(ledPin3, OUTPUT);
+  pinMode(ledPin4, OUTPUT);
+  pinMode(ledPin6, OUTPUT);
+}
+
+void loop() {
+    int potVal = analogRead(potPin);// lecture de la valeur du potentiométre
+    int angle = map(potVal,0,1023,0,179); // transformation en angle
+    leServo.write(angle);//mise en position du servo
+    Serial.println(angle);
+    if(angle > 0 && angle <= 50){
+      diode3();
+    } else if(angle > 50 && angle <=90){
+      diode4();
+    }else if(angle > 90 && angle < 179){
+      diode3();
+      diode4();
+    }
+}
+  
+void diode3(){
+  digitalWrite (ledPin3, HIGH);
+  delay(100);
+  digitalWrite(ledPin3, LOW);
+  delay(100);  
+}
+void diode4(){
+  digitalWrite (ledPin4, HIGH);
+  delay(100);
+  digitalWrite(ledPin4, LOW);
+  delay(100);
+}
+
