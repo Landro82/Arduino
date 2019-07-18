@@ -1,0 +1,23 @@
+int ledPin6 = 6;
+int lichtPin = 0;
+int lichtValue = 0;
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(ledPin6, OUTPUT);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  lichtValue = analogRead(lichtPin);
+  //Serial.println(lichtValue);
+  int licht = map(lichtValue, 0, 1023, 0, 255);
+  Serial.println(licht);
+  if(licht < 100){
+    digitalWrite(ledPin6, HIGH);
+  }else{
+    digitalWrite(ledPin6, LOW);
+  }
+
+}
