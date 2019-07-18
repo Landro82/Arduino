@@ -1,0 +1,82 @@
+#include<Servo.h>
+//Variable
+// période entre chaque début d'impulsion en microsecondes
+int periode = 20000;
+int pinTp = A0;
+float tempo;
+int ledPin4 = 4;
+int ledPin5 = 5;
+int pinServo = 6;
+Servo leServo;
+void setup()
+{
+  Serial.begin(9600);
+  leServo.attach(pinServo);
+  pinMode(pinServo, OUTPUT);
+  pinMode(ledPin4, OUTPUT);
+  pinMode(ledPin5, OUTPUT);
+  digitalWrite(pinServo, LOW);
+
+  
+}
+
+void loop()
+{
+  // 1°C --> 10 mv
+  tempo = analogRead(pinTp);
+// float k=(( 5/1023)*1000)/10;
+  tempo = tempo * 0.488758;
+  Serial.print("Temperatur: ");
+  Serial.print(tempo);
+  Serial.print("*C");
+  Serial.println();
+  delay(1000);
+  if(tempo >0 && tempo <=35){
+    diode1();
+  } else if(tempo > 35 && tempo <= 75){
+    ventil();
+  } else if(tempo > 75 && tempo <= 110){
+    diode2();
+  }else if(tempo > 110){
+    diode1();
+    delay(100);
+    diode2();
+    delay(100);
+    ventil();
+    Serial.print("It is to warm");
+  }
+}
+void diode1(){
+  digitalWrite(ledPin5, HIGH);
+  delay(1000);
+  digitalWrite(ledPin5, LOW);
+  delay(1000);
+}
+void ventil(){
+//on fait varier l'angle de 0 à 180° par tranche de 20°
+  for(int angle = 0; angle <=180; angle +=20){
+    // on appelle la fonction setAngle définie plus bas
+    setAngle(angle);
+  }
+  
+}
+void setAngle(int a){
+  // on transforme l'angle en microsecondes et on stocke dans la variable duree
+  int duree=map(a,0,179,1000,2000);
+  //on met le pin á l'etat bas
+  digitalWrite(pinServo, LOW);
+  // la boucle qui suit est nécessaire 
+  // pour laisser le temps au servo d'aller à sa position
+  for (int t=0;t<300;t++){ 
+    digitalWrite(pinServo,HIGH);// on envoie l'impulsion
+    delayMicroseconds(duree); // pendant la bonne durée
+    digitalWrite(pinServo,LOW); // on stoppe l'impulsion
+    delayMicroseconds(periode-duree); // on attend le temps restant pour atteindre la période
+  }
+}
+void diode2(){
+  digitalWrite(ledPin4, HIGH);
+  delay(1000);
+  digitalWrite(ledPin4, LOW);
+  delay(1000);
+}
